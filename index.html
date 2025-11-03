@@ -13,6 +13,9 @@
         <header>
             <h1>Markdown Editor</h1>
             <div class="header-info">
+                <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">
+                    🌙
+                </button>
                 <div class="export-buttons">
                     <button class="export-btn" id="download-md" title="Download as .md file">
                         ⬇️ .md
@@ -75,6 +78,10 @@
                     <button class="toolbar-btn" id="clear-draft" title="Clear saved draft">
                         🗑️ Clear Draft
                     </button>
+                    <span class="toolbar-divider"></span>
+                    <button class="toolbar-btn" id="generate-toc" title="Generate Table of Contents">
+                        📑 TOC
+                    </button>
                 </div>
                 
                 <!-- Cheat Sheet Panel -->
@@ -131,7 +138,10 @@
                             <h4>Shortcuts</h4>
                             <strong>Ctrl+B</strong> Bold<br>
                             <strong>Ctrl+I</strong> Italic<br>
-                            <strong>Ctrl+K</strong> Link
+                            <strong>Ctrl+K</strong> Link<br>
+                            <strong>Ctrl+S</strong> Save as .md<br>
+                            <strong>Ctrl+/</strong> Toggle theme<br>
+                            <strong>Tab</strong> Insert 2 spaces
                         </div>
                     </div>
                 </div>

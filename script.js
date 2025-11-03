@@ -14,11 +14,18 @@ const copyTextBtn = document.getElementById('copy-text');
 // Auto-save elements
 const autosaveStatus = document.getElementById('autosave-status');
 const clearDraftBtn = document.getElementById('clear-draft');
+const generateTocBtn = document.getElementById('generate-toc');
+
+// Theme toggle
+const themeToggle = document.getElementById('theme-toggle');
 
 // Auto-save configuration
 const AUTOSAVE_KEY = 'markdown-editor-draft';
 const AUTOSAVE_DELAY = 1000; // Save after 1 second of inactivity
 let autosaveTimeout = null;
+
+// Theme configuration
+const THEME_KEY = 'markdown-editor-theme';
 
 // State for soft breaks
 let softBreaksEnabled = false;
@@ -104,6 +111,82 @@ function scheduleAutosave() {
     }, AUTOSAVE_DELAY);
 }
 
+// Theme toggle functions
+function setTheme(theme) {
+    if (theme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.textContent = '☀️';
+        themeToggle.title = 'Switch to light mode';
+    } else {
+        document.body.classList.remove('dark-mode');
+        themeToggle.textContent = '🌙';
+        themeToggle.title = 'Switch to dark mode';
+    }
+    localStorage.setItem(THEME_KEY, theme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+}
+
+function loadTheme() {
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if (savedTheme) {
+        setTheme(savedTheme);
+    } else {
+        // Check system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setTheme('dark');
+        }
+    }
+}
+
+// Table of Contents generator
+function generateTOC() {
+    const markdown = markdownInput.value;
+    const lines = markdown.split('\n');
+    const headers = [];
+    
+    // Extract headers
+    lines.forEach((line, index) => {
+        const match = line.match(/^(#{1,6})\s+(.+)$/);
+        if (match) {
+            const level = match[1].length;
+            const text = match[2];
+            const slug = text.toLowerCase()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-');
+            
+            headers.push({ level, text, slug, index });
+        }
+    });
+    
+    if (headers.length === 0) {
+        alert('No headers found in your document. Add some headers (# Header) to generate a table of contents.');
+        return;
+    }
+    
+    // Generate TOC markdown
+    let toc = '## Table of Contents\n\n';
+    
+    headers.forEach(header => {
+        const indent = '  '.repeat(header.level - 1);
+        toc += `${indent}- [${header.text}](#${header.slug})\n`;
+    });
+    
+    toc += '\n---\n\n';
+    
+    // Insert at beginning of document
+    markdownInput.value = toc + markdown;
+    updatePreview();
+    scheduleAutosave();
+    
+    // Scroll to top
+    markdownInput.scrollTop = 0;
+}
+
 // Parse markdown to HTML
 function parseMarkdown(markdown) {
     try {
@@ -118,6 +201,14 @@ function parseMarkdown(markdown) {
 // Update preview with syntax highlighting
 function updatePreview() {
     const markdown = markdownInput.value;
+    
+    // Show helpful message if empty
+    if (!markdown.trim()) {
+        previewOutput.innerHTML = '<p style="opacity: 0.5; text-align: center; margin-top: 2rem;">Start typing to see your preview here... ✨</p>';
+        updateWordCount(markdown);
+        return;
+    }
+    
     const html = parseMarkdown(markdown);
     previewOutput.innerHTML = html;
     
@@ -129,7 +220,14 @@ function updatePreview() {
     updateWordCount(markdown);
 }
 
-// Update word and character count
+// Debounced preview update for better performance
+let previewTimeout;
+function debouncedPreview() {
+    clearTimeout(previewTimeout);
+    previewTimeout = setTimeout(updatePreview, 150);
+}
+
+// Update word and character count (no debounce needed - very fast)
 function updateWordCount(text) {
     const words = text.trim().split(/\s+/).filter(word => word.length > 0).length;
     const characters = text.length;
@@ -138,7 +236,7 @@ function updateWordCount(text) {
 
 // Event listener for input
 markdownInput.addEventListener('input', () => {
-    updatePreview();
+    debouncedPreview();
     scheduleAutosave();
 });
 
@@ -238,6 +336,32 @@ markdownInput.addEventListener('keydown', (e) => {
         e.preventDefault();
         actions.link();
     }
+    
+    // Ctrl/Cmd + S for save/download
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        downloadMdBtn.click();
+    }
+    
+    // Ctrl/Cmd + / for theme toggle
+    if ((e.ctrlKey || e.metaKey) && e.key === '/') {
+        e.preventDefault();
+        toggleTheme();
+    }
+    
+    // Tab key - insert 2 spaces instead of changing focus
+    if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = markdownInput.selectionStart;
+        const end = markdownInput.selectionEnd;
+        const value = markdownInput.value;
+        
+        markdownInput.value = value.substring(0, start) + '  ' + value.substring(end);
+        markdownInput.selectionStart = markdownInput.selectionEnd = start + 2;
+        
+        updatePreview();
+        scheduleAutosave();
+    }
 });
 
 // Soft breaks toggle
@@ -331,6 +455,18 @@ clearDraftBtn.addEventListener('click', (e) => {
     e.preventDefault();
     clearStorage();
 });
+
+// Theme toggle button
+themeToggle.addEventListener('click', toggleTheme);
+
+// TOC generator button
+generateTocBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    generateTOC();
+});
+
+// Load theme on startup
+loadTheme();
 
 // Load saved draft on page load
 loadFromStorage();
