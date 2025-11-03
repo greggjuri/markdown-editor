@@ -189,6 +189,76 @@ header h1 {
     font-weight: 600;
 }
 
+/* Task lists (GitHub-flavored markdown) */
+#preview-output ul {
+    list-style-type: disc;
+}
+
+#preview-output input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+#preview-output li input[type="checkbox"] {
+    pointer-events: none; /* Prevent interaction in preview */
+}
+
+/* Strikethrough */
+#preview-output del {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+/* Horizontal rule */
+#preview-output hr {
+    border: none;
+    border-top: 2px solid #e0e0e0;
+    margin: 2rem 0;
+}
+
+/* Enhanced code block styling */
+#preview-output pre {
+    background-color: #2d2d2d;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+#preview-output pre code {
+    background-color: transparent;
+    padding: 0;
+    color: #f8f8f2;
+    font-size: 0.9em;
+}
+
+/* Inline code */
+#preview-output code {
+    background-color: #f4f4f4;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    color: #e83e8c;
+}
+
+/* Better table styling */
+#preview-output .markdown-table {
+    border: 1px solid #ddd;
+}
+
+#preview-output .markdown-table th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #ddd;
+}
+
+#preview-output .markdown-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+#preview-output .markdown-table tr:hover {
+    background-color: #f0f0f0;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .editor-container {
