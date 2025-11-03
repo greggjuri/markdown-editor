@@ -6,6 +6,20 @@ const softBreaksToggle = document.getElementById('soft-breaks-toggle');
 const cheatsheetToggle = document.getElementById('cheatsheet-toggle');
 const cheatsheetPanel = document.getElementById('cheatsheet-panel');
 
+// Export buttons
+const downloadMdBtn = document.getElementById('download-md');
+const copyHtmlBtn = document.getElementById('copy-html');
+const copyTextBtn = document.getElementById('copy-text');
+
+// Auto-save elements
+const autosaveStatus = document.getElementById('autosave-status');
+const clearDraftBtn = document.getElementById('clear-draft');
+
+// Auto-save configuration
+const AUTOSAVE_KEY = 'markdown-editor-draft';
+const AUTOSAVE_DELAY = 1000; // Save after 1 second of inactivity
+let autosaveTimeout = null;
+
 // State for soft breaks
 let softBreaksEnabled = false;
 
@@ -29,6 +43,66 @@ function configureMarked() {
 
 // Initial configuration
 configureMarked();
+
+// Auto-save functions
+function updateAutosaveStatus(status) {
+    autosaveStatus.classList.remove('saving', 'saved');
+    
+    if (status === 'saving') {
+        autosaveStatus.textContent = '💾 Saving...';
+        autosaveStatus.classList.add('saving');
+    } else if (status === 'saved') {
+        autosaveStatus.textContent = '✓ Saved';
+        autosaveStatus.classList.add('saved');
+        
+        // Reset to ready after 2 seconds
+        setTimeout(() => {
+            autosaveStatus.textContent = '💾 Auto-save: Ready';
+            autosaveStatus.classList.remove('saved');
+        }, 2000);
+    } else {
+        autosaveStatus.textContent = '💾 Auto-save: Ready';
+    }
+}
+
+function saveToStorage() {
+    const markdown = markdownInput.value;
+    localStorage.setItem(AUTOSAVE_KEY, markdown);
+    updateAutosaveStatus('saved');
+}
+
+function loadFromStorage() {
+    const saved = localStorage.getItem(AUTOSAVE_KEY);
+    if (saved) {
+        markdownInput.value = saved;
+        updatePreview();
+        updateAutosaveStatus('ready');
+    }
+}
+
+function clearStorage() {
+    if (confirm('Are you sure you want to clear the saved draft? This cannot be undone.')) {
+        localStorage.removeItem(AUTOSAVE_KEY);
+        markdownInput.value = '';
+        updatePreview();
+        updateAutosaveStatus('ready');
+    }
+}
+
+function scheduleAutosave() {
+    // Clear existing timeout
+    if (autosaveTimeout) {
+        clearTimeout(autosaveTimeout);
+    }
+    
+    // Show saving status
+    updateAutosaveStatus('saving');
+    
+    // Schedule save after delay
+    autosaveTimeout = setTimeout(() => {
+        saveToStorage();
+    }, AUTOSAVE_DELAY);
+}
 
 // Parse markdown to HTML
 function parseMarkdown(markdown) {
@@ -63,7 +137,10 @@ function updateWordCount(text) {
 }
 
 // Event listener for input
-markdownInput.addEventListener('input', updatePreview);
+markdownInput.addEventListener('input', () => {
+    updatePreview();
+    scheduleAutosave();
+});
 
 // Toolbar functionality
 const toolbarButtons = document.querySelectorAll('.toolbar-btn');
@@ -192,6 +269,71 @@ cheatsheetToggle.addEventListener('click', (e) => {
         cheatsheetToggle.classList.remove('active');
     }
 });
+
+// Export functionality
+
+// Helper function to show success feedback
+function showSuccess(button, originalText) {
+    const original = button.textContent;
+    button.textContent = '✓ ' + originalText;
+    button.classList.add('success');
+    
+    setTimeout(() => {
+        button.textContent = original;
+        button.classList.remove('success');
+    }, 2000);
+}
+
+// Download as .md file
+downloadMdBtn.addEventListener('click', () => {
+    const markdown = markdownInput.value;
+    const blob = new Blob([markdown], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'document.md';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showSuccess(downloadMdBtn, 'Downloaded');
+});
+
+// Copy as HTML
+copyHtmlBtn.addEventListener('click', async () => {
+    const html = parseMarkdown(markdownInput.value);
+    
+    try {
+        await navigator.clipboard.writeText(html);
+        showSuccess(copyHtmlBtn, 'Copied');
+    } catch (err) {
+        console.error('Failed to copy HTML:', err);
+        alert('Failed to copy to clipboard');
+    }
+});
+
+// Copy as plain text
+copyTextBtn.addEventListener('click', async () => {
+    const text = markdownInput.value;
+    
+    try {
+        await navigator.clipboard.writeText(text);
+        showSuccess(copyTextBtn, 'Copied');
+    } catch (err) {
+        console.error('Failed to copy text:', err);
+        alert('Failed to copy to clipboard');
+    }
+});
+
+// Clear draft button
+clearDraftBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    clearStorage();
+});
+
+// Load saved draft on page load
+loadFromStorage();
 
 // Initialize with empty state
 updatePreview();

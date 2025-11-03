@@ -13,6 +13,18 @@
         <header>
             <h1>Markdown Editor</h1>
             <div class="header-info">
+                <div class="export-buttons">
+                    <button class="export-btn" id="download-md" title="Download as .md file">
+                        ⬇️ .md
+                    </button>
+                    <button class="export-btn" id="copy-html" title="Copy as HTML">
+                        📋 HTML
+                    </button>
+                    <button class="export-btn" id="copy-text" title="Copy as plain text">
+                        📋 Text
+                    </button>
+                </div>
+                <span class="autosave-status" id="autosave-status">💾 Auto-save: Ready</span>
                 <span class="word-count">Words: 0 | Characters: 0</span>
             </div>
         </header>
@@ -58,6 +70,10 @@
                     </button>
                     <button class="toolbar-btn toolbar-toggle" id="cheatsheet-toggle" title="Toggle Cheat Sheet">
                         📖 Cheat Sheet
+                    </button>
+                    <span class="toolbar-divider"></span>
+                    <button class="toolbar-btn" id="clear-draft" title="Clear saved draft">
+                        🗑️ Clear Draft
                     </button>
                 </div>
                 

@@ -39,6 +39,56 @@ header h1 {
     align-items: center;
 }
 
+.export-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.export-btn {
+    padding: 0.4rem 0.75rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.export-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+}
+
+.export-btn:active {
+    background-color: #21618c;
+    transform: translateY(0);
+}
+
+.export-btn.success {
+    background-color: #27ae60;
+}
+
+.autosave-status {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    padding: 0.3rem 0.6rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.autosave-status.saving {
+    opacity: 1;
+    background-color: rgba(52, 152, 219, 0.2);
+}
+
+.autosave-status.saved {
+    opacity: 1;
+    background-color: rgba(39, 174, 96, 0.2);
+}
+
 .word-count {
     font-size: 0.9rem;
     opacity: 0.9;
@@ -389,10 +439,34 @@ header h1 {
 
     header {
         padding: 0.75rem 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
     }
 
     header h1 {
         font-size: 1.25rem;
+    }
+    
+    .header-info {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .export-buttons {
+        gap: 0.25rem;
+    }
+    
+    .export-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+    
+    .autosave-status {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.4rem;
     }
 
     .word-count {
