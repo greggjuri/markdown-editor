@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Editor - jurigregg.com</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Markdown Editor</h1>
+            <div class="header-info">
+                <span class="word-count">Words: 0 | Characters: 0</span>
+            </div>
+        </header>
+
+        <div class="editor-container">
+            <!-- Editor Pane -->
+            <div class="editor-pane">
+                <div class="pane-header">
+                    <h2>Editor</h2>
+                </div>
+                <textarea id="markdown-input" placeholder="Start typing your markdown here..."></textarea>
+            </div>
+
+            <!-- Preview Pane -->
+            <div class="preview-pane">
+                <div class="pane-header">
+                    <h2>Preview</h2>
+                </div>
+                <div id="preview-output"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
