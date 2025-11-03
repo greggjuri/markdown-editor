@@ -128,6 +128,65 @@ header h1 {
     margin: 0 0.25rem;
 }
 
+/* Cheat Sheet Panel */
+.cheatsheet-panel {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+    max-height: 300px;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+}
+
+.cheatsheet-panel.hidden {
+    max-height: 0;
+    overflow: hidden;
+    border-bottom: none;
+}
+
+.cheatsheet-content {
+    padding: 1rem 1.5rem;
+}
+
+.cheatsheet-content h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+.cheatsheet-section {
+    margin-bottom: 1rem;
+}
+
+.cheatsheet-section h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    color: #34495e;
+    font-weight: 600;
+}
+
+.cheatsheet-section code {
+    display: inline-block;
+    background-color: white;
+    padding: 0.3rem 0.6rem;
+    margin: 0.2rem 0.3rem 0.2rem 0;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    border: 1px solid #e0e0e0;
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.4;
+}
+
+.cheatsheet-section strong {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    margin: 0.2rem 0.3rem 0.2rem 0;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
 #markdown-input {
     flex: 1;
     padding: 1.5rem;
@@ -350,5 +409,19 @@ header h1 {
         font-size: 0.8rem;
         min-width: 28px;
         height: 28px;
+    }
+    
+    .cheatsheet-panel {
+        max-height: 250px;
+        font-size: 0.85rem;
+    }
+    
+    .cheatsheet-content {
+        padding: 0.75rem 1rem;
+    }
+    
+    .cheatsheet-section code {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.4rem;
     }
 }

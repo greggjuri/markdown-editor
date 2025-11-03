@@ -3,6 +3,8 @@ const markdownInput = document.getElementById('markdown-input');
 const previewOutput = document.getElementById('preview-output');
 const wordCountDisplay = document.querySelector('.word-count');
 const softBreaksToggle = document.getElementById('soft-breaks-toggle');
+const cheatsheetToggle = document.getElementById('cheatsheet-toggle');
+const cheatsheetPanel = document.getElementById('cheatsheet-panel');
 
 // State for soft breaks
 let softBreaksEnabled = false;
@@ -176,6 +178,19 @@ softBreaksToggle.addEventListener('click', (e) => {
     // Reconfigure marked.js and update preview
     configureMarked();
     updatePreview();
+});
+
+// Cheat sheet toggle
+cheatsheetToggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    cheatsheetPanel.classList.toggle('hidden');
+    
+    // Update button state
+    if (!cheatsheetPanel.classList.contains('hidden')) {
+        cheatsheetToggle.classList.add('active');
+    } else {
+        cheatsheetToggle.classList.remove('active');
+    }
 });
 
 // Initialize with empty state

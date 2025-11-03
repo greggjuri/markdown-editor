@@ -56,6 +56,68 @@
                     <button class="toolbar-btn toolbar-toggle" id="soft-breaks-toggle" title="Toggle Soft Line Breaks">
                         ↵ Soft Breaks
                     </button>
+                    <button class="toolbar-btn toolbar-toggle" id="cheatsheet-toggle" title="Toggle Cheat Sheet">
+                        📖 Cheat Sheet
+                    </button>
+                </div>
+                
+                <!-- Cheat Sheet Panel -->
+                <div id="cheatsheet-panel" class="cheatsheet-panel hidden">
+                    <div class="cheatsheet-content">
+                        <h3>Markdown Cheat Sheet</h3>
+                        
+                        <div class="cheatsheet-section">
+                            <h4>Headers</h4>
+                            <code># H1</code>
+                            <code>## H2</code>
+                            <code>### H3</code>
+                        </div>
+                        
+                        <div class="cheatsheet-section">
+                            <h4>Emphasis</h4>
+                            <code>**bold**</code> or <code>__bold__</code>
+                            <code>*italic*</code> or <code>_italic_</code>
+                            <code>~~strikethrough~~</code>
+                        </div>
+                        
+                        <div class="cheatsheet-section">
+                            <h4>Lists</h4>
+                            <code>- Bullet item</code>
+                            <code>1. Numbered item</code>
+                            <code>- [ ] Task item</code>
+                            <code>- [x] Done item</code>
+                        </div>
+                        
+                        <div class="cheatsheet-section">
+                            <h4>Links & Images</h4>
+                            <code>[text](url)</code>
+                            <code>![alt](image.png)</code>
+                        </div>
+                        
+                        <div class="cheatsheet-section">
+                            <h4>Code</h4>
+                            <code>`inline code`</code>
+                            <code>```language<br>code block<br>```</code>
+                        </div>
+                        
+                        <div class="cheatsheet-section">
+                            <h4>Other</h4>
+                            <code>&gt; Blockquote</code>
+                            <code>---</code> Horizontal rule
+                        </div>
+                        
+                        <div class="cheatsheet-section">
+                            <h4>Tables</h4>
+                            <code>| Col1 | Col2 |<br>|------|------|<br>| Val1 | Val2 |</code>
+                        </div>
+                        
+                        <div class="cheatsheet-section">
+                            <h4>Shortcuts</h4>
+                            <strong>Ctrl+B</strong> Bold<br>
+                            <strong>Ctrl+I</strong> Italic<br>
+                            <strong>Ctrl+K</strong> Link
+                        </div>
+                    </div>
                 </div>
                 
                 <textarea id="markdown-input" placeholder="Start typing your markdown here..."></textarea>
