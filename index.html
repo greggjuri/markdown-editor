@@ -41,32 +41,32 @@
                 
                 <!-- Toolbar -->
                 <div class="toolbar">
-                    <button class="toolbar-btn" data-action="bold" title="Bold (Ctrl+B)">
+                    <button class="toolbar-btn" data-action="bold">
                         <strong>B</strong>
                     </button>
-                    <button class="toolbar-btn" data-action="italic" title="Italic (Ctrl+I)">
+                    <button class="toolbar-btn" data-action="italic">
                         <em>I</em>
                     </button>
-                    <button class="toolbar-btn" data-action="strikethrough" title="Strikethrough">
+                    <button class="toolbar-btn" data-action="strikethrough">
                         <s>S</s>
                     </button>
                     <span class="toolbar-divider"></span>
-                    <button class="toolbar-btn" data-action="h1" title="Header 1">H1</button>
-                    <button class="toolbar-btn" data-action="h2" title="Header 2">H2</button>
-                    <button class="toolbar-btn" data-action="h3" title="Header 3">H3</button>
+                    <button class="toolbar-btn" data-action="h1">H1</button>
+                    <button class="toolbar-btn" data-action="h2">H2</button>
+                    <button class="toolbar-btn" data-action="h3">H3</button>
                     <span class="toolbar-divider"></span>
-                    <button class="toolbar-btn" data-action="link" title="Link (Ctrl+K)">🔗</button>
-                    <button class="toolbar-btn" data-action="image" title="Image">🖼️</button>
-                    <button class="toolbar-btn" data-action="code" title="Inline Code">{ }</button>
-                    <button class="toolbar-btn" data-action="codeblock" title="Code Block">```</button>
+                    <button class="toolbar-btn" data-action="link">🔗</button>
+                    <button class="toolbar-btn" data-action="image">🖼️</button>
+                    <button class="toolbar-btn" data-action="code">{ }</button>
+                    <button class="toolbar-btn" data-action="codeblock">```</button>
                     <span class="toolbar-divider"></span>
-                    <button class="toolbar-btn" data-action="ul" title="Bullet List">• List</button>
-                    <button class="toolbar-btn" data-action="ol" title="Numbered List">1. List</button>
-                    <button class="toolbar-btn" data-action="task" title="Task List">☐ Task</button>
+                    <button class="toolbar-btn" data-action="ul">• List</button>
+                    <button class="toolbar-btn" data-action="ol">1. List</button>
+                    <button class="toolbar-btn" data-action="task">☐ Task</button>
                     <span class="toolbar-divider"></span>
-                    <button class="toolbar-btn" data-action="quote" title="Blockquote">❝</button>
-                    <button class="toolbar-btn" data-action="table" title="Table">⊞</button>
-                    <button class="toolbar-btn" data-action="hr" title="Horizontal Rule">—</button>
+                    <button class="toolbar-btn" data-action="quote">❝</button>
+                    <button class="toolbar-btn" data-action="table">⊞</button>
+                    <button class="toolbar-btn" data-action="hr">—</button>
                     <span class="toolbar-divider"></span>
                     <button class="toolbar-btn toolbar-toggle" id="soft-breaks-toggle" title="Toggle Soft Line Breaks">
                         ↵ Soft Breaks
@@ -147,6 +147,13 @@
                 </div>
                 
                 <textarea id="markdown-input" placeholder="Start typing your markdown here..."></textarea>
+            </div>
+
+            <!-- Tooltip for toolbar examples -->
+            <div id="toolbar-tooltip" class="toolbar-tooltip hidden">
+                <div class="tooltip-markdown"></div>
+                <div class="tooltip-arrow"></div>
+                <div class="tooltip-preview"></div>
             </div>
 
             <!-- Preview Pane -->

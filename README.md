@@ -1,28 +1,52 @@
 # Markdown Editor
 
-A clean, functional markdown editor with live preview for creating and editing markdown documents. Perfect for GitHub README files, Joplin notes, and general markdown writing.
+A powerful, feature-rich markdown editor with live preview, built in one night! Perfect for creating GitHub README files, Joplin notes, documentation, and any markdown content.
 
-## Features
+## ✨ Features
 
-### Current (v0.1 - Basic Structure)
-- ✅ Split-pane layout (editor | preview)
-- ✅ Live preview rendering
-- ✅ Word and character counter
-- ✅ Responsive design (mobile-friendly)
-- ✅ Basic markdown support
+### Core Functionality
+- ✅ **Live Preview** - See your rendered markdown in real-time
+- ✅ **Split-pane Layout** - Editor and preview side-by-side
+- ✅ **GitHub-flavored Markdown** - Full GFM support including tables, task lists, and strikethrough
+- ✅ **Syntax Highlighting** - Beautiful code blocks with Prism.js supporting JavaScript, Python, Bash, JSON, CSS, HTML and more
+- ✅ **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
 
-### Planned Features
-- [ ] Enhanced markdown rendering (GitHub-flavored markdown)
-- [ ] Syntax highlighting in editor
-- [ ] Toolbar with quick formatting buttons
-- [ ] Toggleable markdown cheat sheet
-- [ ] Export options (download .md, copy HTML, copy text)
-- [ ] Auto-save to browser storage
-- [ ] Dark/light mode toggle
-- [ ] Keyboard shortcuts
-- [ ] Table of contents generator
+### Editing Tools
+- ✅ **Formatting Toolbar** - Quick buttons for all common markdown syntax
+  - Text formatting: Bold, Italic, Strikethrough
+  - Headers: H1, H2, H3
+  - Links and Images
+  - Code: Inline and code blocks
+  - Lists: Bullet, numbered, and task lists
+  - Blockquotes, tables, and horizontal rules
+- ✅ **Hover Tooltips** - Learn markdown syntax by hovering over toolbar buttons
+- ✅ **Keyboard Shortcuts**:
+  - `Ctrl+B` / `Cmd+B` - Bold
+  - `Ctrl+I` / `Cmd+I` - Italic
+  - `Ctrl+K` / `Cmd+K` - Link
+  - `Ctrl+S` / `Cmd+S` - Download as .md
+  - `Ctrl+/` / `Cmd+/` - Toggle theme
+  - `Tab` - Insert 2 spaces
 
-## Installation
+### Learning & Reference
+- ✅ **Markdown Cheat Sheet** - Toggleable reference panel with all syntax examples
+- ✅ **Interactive Tooltips** - Hover over buttons to see syntax and preview
+
+### Export & Save
+- ✅ **Download as .md** - Save your work as a markdown file
+- ✅ **Copy as HTML** - Copy rendered HTML to clipboard
+- ✅ **Copy as Text** - Copy raw markdown to clipboard
+- ✅ **Auto-save** - Automatically saves to browser storage every second after typing
+- ✅ **Persistent Storage** - Never lose your work, even if you close the browser
+
+### Advanced Features
+- ✅ **Dark/Light Mode** - Beautiful themes for any time of day
+- ✅ **Soft Line Breaks Toggle** - Choose between standard markdown or single-line-break behavior
+- ✅ **Table of Contents Generator** - Automatically create TOC from headers
+- ✅ **Word & Character Count** - Real-time statistics
+- ✅ **Performance Optimized** - Debounced rendering for smooth typing experience
+
+## 🚀 Installation
 
 1. Clone the repository:
 ```bash
@@ -30,46 +54,103 @@ git clone https://github.com/greggjuri/markdown-editor.git
 cd markdown-editor
 ```
 
-2. Open `index.html` in your browser, or serve with a local server.
+2. Open `index.html` in your browser, or serve with a local server:
+```bash
+# Python
+python -m http.server 8000
 
-## Deployment
+# Node.js
+npx serve
+```
 
-To deploy to Hostinger at `jurigregg.com/md`:
+3. Start editing!
 
-1. Upload files to your hosting directory
-2. Ensure the files are in the `/md` subdirectory
-3. Access at `https://jurigregg.com/md`
+## 🌐 Deployment
 
-## Usage
+### Hostinger (or any web host)
 
-Simply start typing in the left pane and see your rendered markdown in the right pane. The word and character count updates automatically.
+1. Upload all files to your hosting directory
+2. Place in your desired subdirectory (e.g., `/md`)
+3. Access at `https://yourdomain.com/md`
 
-## Technology Stack
+### GitHub Pages
 
-- Pure HTML, CSS, and JavaScript
-- No build process required
-- Lightweight and fast
+1. Push to GitHub
+2. Enable GitHub Pages in repository settings
+3. Access at `https://username.github.io/markdown-editor`
 
-## Development Roadmap
+## 📖 Usage
 
-This project is being built incrementally with proper version control:
+### Basic Editing
+1. Type your markdown in the left pane
+2. See the live preview in the right pane
+3. Use the toolbar for quick formatting
 
-1. **Phase 1**: Basic structure ✅ (Current)
-2. **Phase 2**: Enhanced markdown parsing
-3. **Phase 3**: Editor improvements (syntax highlighting, toolbar)
-4. **Phase 4**: Utility features (cheat sheet, exports)
-5. **Phase 5**: User experience (auto-save, themes)
-6. **Phase 6**: Advanced features (shortcuts, TOC)
+### Keyboard Shortcuts
+- **Bold**: `Ctrl+B` - Wrap text in `**bold**`
+- **Italic**: `Ctrl+I` - Wrap text in `*italic*`
+- **Link**: `Ctrl+K` - Insert link syntax
+- **Save**: `Ctrl+S` - Download as .md file
+- **Theme**: `Ctrl+/` - Toggle dark/light mode
+- **Tab**: Insert 2 spaces (doesn't lose focus)
 
-## Contributing
+### Auto-save
+Your work is automatically saved to browser storage as you type. When you return to the editor, your last draft will be loaded automatically.
+
+### Export Options
+- **⬇️ .md** - Download as markdown file
+- **📋 HTML** - Copy rendered HTML to clipboard
+- **📋 Text** - Copy raw markdown to clipboard
+
+### Table of Contents
+Click **📑 TOC** to generate a table of contents from all headers in your document. The TOC will be inserted at the top with clickable links.
+
+### Dark Mode
+Click the **🌙/☀️** button to toggle between light and dark themes. Your preference is saved automatically.
+
+## 🛠️ Technology Stack
+
+- **Pure HTML, CSS, and JavaScript** - No build process required
+- **marked.js** - Markdown parsing with GitHub-flavored markdown support
+- **Prism.js** - Syntax highlighting for code blocks
+- **LocalStorage API** - Auto-save functionality
+- **CSS Variables** - Theme switching
+
+## 📝 Development
+
+Built incrementally with proper version control:
+
+1. ✅ Basic structure with split-pane layout
+2. ✅ Enhanced markdown rendering with marked.js
+3. ✅ Formatting toolbar with quick buttons
+4. ✅ Markdown cheat sheet panel
+5. ✅ Export features (download, copy)
+6. ✅ Auto-save to browser storage
+7. ✅ Dark/light mode toggle
+8. ✅ Advanced polish (TOC, shortcuts, optimization)
+9. ✅ Interactive hover tooltips
+
+## 🤝 Contributing
 
 This is a personal project for learning and productivity. Feel free to fork and adapt for your own use!
 
-## License
+## 📄 License
 
 MIT License - feel free to use and modify as needed.
 
-## Author
+## 👤 Author
 
-Juri Gregg - [jurigregg.com](https://jurigregg.com)
-GitHub: [@greggjuri](https://github.com/greggjuri)
+**Juri Gregg**
+- Website: [jurigregg.com](https://jurigregg.com)
+- GitHub: [@greggjuri](https://github.com/greggjuri)
+- Editor: [jurigregg.com/md](https://jurigregg.com/md)
+
+## 🙏 Acknowledgments
+
+- Built with help from Claude (Anthropic)
+- Inspired by the need for a simple, powerful markdown editor
+- Created in one night as a fun web app project
+
+---
+
+**Happy Markdown Writing! ✍️**

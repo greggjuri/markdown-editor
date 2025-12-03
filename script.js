@@ -19,6 +19,12 @@ const generateTocBtn = document.getElementById('generate-toc');
 // Theme toggle
 const themeToggle = document.getElementById('theme-toggle');
 
+// Tooltip
+const tooltip = document.getElementById('toolbar-tooltip');
+const tooltipMarkdown = tooltip.querySelector('.tooltip-markdown');
+const tooltipPreview = tooltip.querySelector('.tooltip-preview');
+let tooltipTimeout = null;
+
 // Auto-save configuration
 const AUTOSAVE_KEY = 'markdown-editor-draft';
 const AUTOSAVE_DELAY = 1000; // Save after 1 second of inactivity
@@ -26,6 +32,74 @@ let autosaveTimeout = null;
 
 // Theme configuration
 const THEME_KEY = 'markdown-editor-theme';
+
+// Tooltip examples for each action
+const tooltipExamples = {
+    bold: {
+        markdown: '**bold text**',
+        preview: '<strong>bold text</strong>'
+    },
+    italic: {
+        markdown: '*italic text*',
+        preview: '<em>italic text</em>'
+    },
+    strikethrough: {
+        markdown: '~~strikethrough~~',
+        preview: '<s>strikethrough</s>'
+    },
+    h1: {
+        markdown: '# Heading 1',
+        preview: '<h1 style="font-size: 1.5rem; font-weight: 600;">Heading 1</h1>'
+    },
+    h2: {
+        markdown: '## Heading 2',
+        preview: '<h2 style="font-size: 1.25rem; font-weight: 600;">Heading 2</h2>'
+    },
+    h3: {
+        markdown: '### Heading 3',
+        preview: '<h3 style="font-size: 1.1rem; font-weight: 600;">Heading 3</h3>'
+    },
+    link: {
+        markdown: '[link text](url)',
+        preview: '<a href="#" style="color: #3498db;">link text</a>'
+    },
+    image: {
+        markdown: '![alt text](image.png)',
+        preview: '🖼️ Image: <em>alt text</em>'
+    },
+    code: {
+        markdown: '`inline code`',
+        preview: '<code>inline code</code>'
+    },
+    codeblock: {
+        markdown: '```language\ncode block\n```',
+        preview: '<pre style="background: #2d2d2d; padding: 0.5rem; border-radius: 3px; font-family: monospace; font-size: 0.85rem; color: #f8f8f2;">code block</pre>'
+    },
+    ul: {
+        markdown: '- List item',
+        preview: '• List item'
+    },
+    ol: {
+        markdown: '1. List item',
+        preview: '1. List item'
+    },
+    task: {
+        markdown: '- [ ] Task item',
+        preview: '☐ Task item'
+    },
+    quote: {
+        markdown: '> Blockquote',
+        preview: '<span style="border-left: 3px solid #3498db; padding-left: 0.5rem; color: #666;">Blockquote</span>'
+    },
+    table: {
+        markdown: '| Col1 | Col2 |\n|------|------|\n| A    | B    |',
+        preview: '<table style="border-collapse: collapse; font-size: 0.8rem;"><tr><th style="border: 1px solid #ddd; padding: 0.25rem;">Col1</th><th style="border: 1px solid #ddd; padding: 0.25rem;">Col2</th></tr><tr><td style="border: 1px solid #ddd; padding: 0.25rem;">A</td><td style="border: 1px solid #ddd; padding: 0.25rem;">B</td></tr></table>'
+    },
+    hr: {
+        markdown: '---',
+        preview: '<hr style="border: none; border-top: 2px solid #ddd; margin: 0.5rem 0;">'
+    }
+};
 
 // State for soft breaks
 let softBreaksEnabled = false;
@@ -187,6 +261,33 @@ function generateTOC() {
     markdownInput.scrollTop = 0;
 }
 
+// Tooltip functions
+function showTooltip(button, action) {
+    const example = tooltipExamples[action];
+    if (!example) return;
+    
+    // Set content
+    tooltipMarkdown.textContent = example.markdown;
+    tooltipPreview.innerHTML = example.preview;
+    
+    // Position tooltip above button
+    const rect = button.getBoundingClientRect();
+    const tooltipRect = tooltip.getBoundingClientRect();
+    
+    const left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+    const top = rect.top - tooltipRect.height - 10;
+    
+    tooltip.style.left = `${Math.max(10, left)}px`;
+    tooltip.style.top = `${top}px`;
+    
+    // Show tooltip
+    tooltip.classList.remove('hidden');
+}
+
+function hideTooltip() {
+    tooltip.classList.add('hidden');
+}
+
 // Parse markdown to HTML
 function parseMarkdown(markdown) {
     try {
@@ -315,6 +416,22 @@ toolbarButtons.forEach(button => {
             actions[action]();
         }
     });
+    
+    // Add tooltip on hover (only for action buttons, not toggles)
+    const action = button.getAttribute('data-action');
+    if (action && tooltipExamples[action]) {
+        button.addEventListener('mouseenter', () => {
+            clearTimeout(tooltipTimeout);
+            tooltipTimeout = setTimeout(() => {
+                showTooltip(button, action);
+            }, 500); // Show after 500ms hover
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            clearTimeout(tooltipTimeout);
+            hideTooltip();
+        });
+    }
 });
 
 // Keyboard shortcuts
